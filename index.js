@@ -21,7 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get("/", function (req, res) {
-    res.render("index", {settings: settingsBill.getSettings()});
+    res.render("index", {settings: settingsBill.getSettings(),
+    totals:settingsBill.totals()
+});
 
 });
 app.post("/settings", function (req, res) {
@@ -37,14 +39,20 @@ app.post("/settings", function (req, res) {
 
    res.redirect("/")
 });
-app.post("/action ", function (req, res) {
-
+app.post("/action", function (req, res) {
+   
+   settingsBill.recordAction(req.body.actionType)
+   
+    res.redirect("/")
 });
-app.get("/actions ", function (req, res) {
 
+app.get("/actions", function (req, res) {
+res.render("actions", {actions: settingsBill.actions()})
 });
-app.get("/actions/:type ", function (req, res) {
 
+app.get("/actions/:actionType", function (req, res) {
+    const actionType = req.params.actionType;
+res.render("actions", {actions: settingsBill.actionsFor(actionType)})
 });
 
 const PORT = process.env.PORT || 3011;
