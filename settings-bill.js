@@ -17,6 +17,7 @@ export default function SettingsBill() {
     function getSettings
     () {
         return {
+            
             smsCost,
             callCost,
             warningLevel,
