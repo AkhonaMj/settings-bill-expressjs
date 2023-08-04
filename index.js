@@ -24,40 +24,46 @@ app.use(bodyParser.json())
 
 
 app.get("/", function (req, res) {
-    res.render("index", {settings: settingsBill.getSettings(),
-    totals:settingsBill.totals()
-});
+    res.render("index", {
+        settings: settingsBill.getSettings(),
+        totals: settingsBill.totals(),
+        totalColor: settingsBill.totalClassName()
+      
+    });
 
 });
 app.post("/settings", function (req, res) {
-   console.log(req.body);
+    console.log(req.body);
 
-   settingsBill.setSettings({
-    callCost: req.body.callCost,
-    smsCost: req.body.smsCost,
-    warningLevel: req.body.warningLevel,
-    criticalLevel: req.body.criticalLevel,
-   });
-   console.log(settingsBill.getSettings());
+    settingsBill.setSettings({
+        callCost: req.body.callCost,
+        smsCost: req.body.smsCost,
+        warningLevel: req.body.warningLevel,
+        criticalLevel: req.body.criticalLevel,
+    });
+    console.log(settingsBill.getSettings());
 
-   res.redirect("/")
+    res.redirect("/")
 });
 app.post("/action", function (req, res) {
-   
-   settingsBill.recordAction(req.body.actionType)
-   
+
+    settingsBill.recordAction(req.body.actionType)
+
     res.redirect("/")
 });
 
 app.get("/actions", function (req, res) {
-res.render("actions", {actions: settingsBill.actions()})
+    res.render("actions", { 
+        actions: settingsBill.actions(), 
+        timeNow: settingsBill.actionType()
+    })
 });
 
 app.get("/actions/:actionType", function (req, res) {
     const actionType = req.params.actionType;
-    console.log(moment(new Date()).fromNow())
+   
 
-res.render("actions", {actions: settingsBill.actionsFor(actionType)})
+    res.render("actions", { actions: settingsBill.actionsFor(actionType) })
 });
 
 const PORT = process.env.PORT || 3011;
