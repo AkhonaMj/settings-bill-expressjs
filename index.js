@@ -2,7 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import bodyParser from "body-parser";
 import SettingsBill from "./settings-bill.js"
-import moment from "moment";
+import moment from "moment"
 
 const app = express();
 const settingsBill = SettingsBill();
@@ -10,6 +10,7 @@ const exphbs = engine({
     defaultLayout: 'main',
     layoutsDir: 'views/layouts'
 });
+
 
 app.engine('handlebars', exphbs);
 app.set('view engine', 'handlebars');
@@ -27,11 +28,14 @@ app.get("/", function (req, res) {
     res.render("index", {
         settings: settingsBill.getSettings(),
         totals: settingsBill.totals(),
-        totalColor: settingsBill.totalClassName()
-      
+        totalColor: settingsBill.totalClassName(),
+
+
     });
 
 });
+
+
 app.post("/settings", function (req, res) {
     console.log(req.body);
 
@@ -52,18 +56,35 @@ app.post("/action", function (req, res) {
     res.redirect("/")
 });
 
+function timeNow(actionType) {
+    if (!actionType) {
+        var timeAgo = settingsBill.actions();
+    } else {
+        var timeAgo = settingsBill.actionsFor(actionType)
+    }
+
+
+    for (var i = 0; i < timeAgo.length; i++) {
+        timeAgo[i].timestamp = moment().fromNow();
+    }
+
+    return timeAgo
+}
+
 app.get("/actions", function (req, res) {
-    res.render("actions", { 
-        actions: settingsBill.actions(), 
-        timeNow: settingsBill.actionType()
+    res.render("actions", {
+        actions: timeNow("")
+
     })
 });
 
 app.get("/actions/:actionType", function (req, res) {
     const actionType = req.params.actionType;
-   
 
-    res.render("actions", { actions: settingsBill.actionsFor(actionType) })
+
+    res.render("actions", {
+        actions: timeNow(actionType)
+    })
 });
 
 const PORT = process.env.PORT || 3011;

@@ -27,13 +27,16 @@ export default function SettingsBill() {
     function recordAction(action) {
 
         let cost = 0;
-        if (action === 'sms') {
-            cost = smsCost;
-        }
-        else if (action === 'call') {
-            cost = callCost;
-        }
+        if (grandTotal() < criticalLevel) {
 
+
+            if (action === 'sms') {
+                cost = smsCost;
+            }
+            else if (action === 'call') {
+                cost = callCost;
+            }
+        }
         actionList.push({
             type: action,
             cost,
@@ -44,6 +47,7 @@ export default function SettingsBill() {
     function actions() {
         return actionList;
     }
+    
 
     function actionsFor(type) {
         const filteredActions = [];
@@ -113,13 +117,14 @@ export default function SettingsBill() {
 
     function totalClassName() {
         if (hasReachedCriticalLevel()) {
+
             return "danger"
         }
         else if (hasReachedWarningLevel()) {
             return "warning"
         }
     }
-
+   
 
     return {
         setSettings,
@@ -130,6 +135,7 @@ export default function SettingsBill() {
         totals,
         hasReachedWarningLevel,
         hasReachedCriticalLevel,
-        totalClassName
+        totalClassName,
+
     }
 }
