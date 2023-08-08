@@ -47,7 +47,7 @@ export default function SettingsBill() {
     function actions() {
         return actionList;
     }
-    
+
 
     function actionsFor(type) {
         const filteredActions = [];
@@ -88,6 +88,7 @@ export default function SettingsBill() {
         // }, 0);
     }
 
+
     function grandTotal() {
         return getTotal('sms') + getTotal('call');
     }
@@ -124,7 +125,17 @@ export default function SettingsBill() {
             return "warning"
         }
     }
-   
+    function resetSetting() {
+            smsCost = 0,
+            callCost = 0,
+            warningLevel = 0,
+            criticalLevel= 0,
+            actionList = []
+
+  
+    }
+
+
 
     return {
         setSettings,
@@ -136,6 +147,7 @@ export default function SettingsBill() {
         hasReachedWarningLevel,
         hasReachedCriticalLevel,
         totalClassName,
+        resetSetting
 
     }
 }

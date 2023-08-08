@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import SettingsBill from "./settings-bill.js"
 import moment from "moment"
 
+
 const app = express();
 const settingsBill = SettingsBill();
 const exphbs = engine({
@@ -34,6 +35,8 @@ app.get("/", function (req, res) {
     });
 
 });
+
+
 
 
 app.post("/settings", function (req, res) {
@@ -86,6 +89,18 @@ app.get("/actions/:actionType", function (req, res) {
         actions: timeNow(actionType)
     })
 });
+
+app.post("/reset", function(req, res){
+    settingsBill.resetSetting(),
+    settingsBill.totalClassName(),
+    
+
+    res.redirect("/")
+
+});
+
+
+
 
 const PORT = process.env.PORT || 3011;
 
