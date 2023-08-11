@@ -123,13 +123,13 @@ export default function SettingsBill() {
         }
         else if (hasReachedWarningLevel()) {
             return "warning"
+
+        }else{
+            return ""
         }
     }
     function resetSetting() {
-            smsCost = 0,
-            callCost = 0,
-            warningLevel = 0,
-            criticalLevel= 0,
+          
             actionList = []
 
   

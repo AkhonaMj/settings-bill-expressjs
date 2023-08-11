@@ -92,7 +92,7 @@ app.get("/actions/:actionType", function (req, res) {
 
 app.post("/reset", function(req, res){
     settingsBill.resetSetting(),
-    settingsBill.totalClassName(),
+    
     
 
     res.redirect("/")
