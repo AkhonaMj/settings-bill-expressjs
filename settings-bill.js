@@ -12,6 +12,7 @@ export default function SettingsBill() {
         callCost = Number(settings.callCost);
         warningLevel = settings.warningLevel;
         criticalLevel = settings.criticalLevel;
+      
     }
 
     function getSettings
@@ -117,22 +118,32 @@ export default function SettingsBill() {
     }
 
     function totalClassName() {
-        if (hasReachedCriticalLevel()) {
+     if(criticalLevel == "" )
+        {
+            return "normal"
+        }
+        else if (hasReachedCriticalLevel()) {
 
             return "danger"
         }
         else if (hasReachedWarningLevel()) {
             return "warning"
 
-        }else{
-            return ""
-        }
+        } 
     }
-    function resetSetting() {
-          
-            actionList = []
+    function resetTotals(){
+        actionList = []
 
-  
+    }
+
+    function resetSetting() {
+        smsCost = ""
+        callCost= ""
+        warningLevel= ""
+        criticalLevel= ""
+
+
+
     }
 
 
@@ -147,6 +158,7 @@ export default function SettingsBill() {
         hasReachedWarningLevel,
         hasReachedCriticalLevel,
         totalClassName,
+        resetTotals,
         resetSetting
 
     }
